@@ -10,12 +10,14 @@ class App extends React.Component {
     this.state = {
       value:'',
       movieValue:'',
-      currentList: []
+      currentList: [],
+      watched: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleAddMovie= this.handleAddMovie.bind(this);
-    this.handleMovieChange=this.handleMovieChange.bind(this);
+    this.handleAddMovie = this.handleAddMovie.bind(this);
+    this.handleMovieChange = this.handleMovieChange.bind(this);
+    this.toggleButton = this.toggleButton.bind(this);
   }
   handleChange(e) {
     this.setState({value: e.target.value})
@@ -35,19 +37,36 @@ class App extends React.Component {
 
   handleAddMovie(e) {
     e.preventDefault()
-    var movieObj = {title: this.state.movieValue}
+    var movieObj = {title: this.state.movieValue, watched: this.state.watched}
     var newList = this.state.currentList.slice()
     newList.push(movieObj)
     this.setState({currentList: newList})
    }
 
+   toggleButton(e){
+    this.setState(state => ({
+      watched: !state.watched
+    }));
+  }
+
   render() {
     return (
       <div>
         <h1>Movie List</h1>
-        <SearchBar value={this.state.value} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
-        <AddMovies movieValue={this.movieValue} handleMovieChange={this.handleMovieChange} handleAddMovie={this.handleAddMovie}/>
-        <MovieList movies={this.state.currentList}/>
+        <SearchBar
+        value={this.state.value}
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}/>
+
+        <AddMovies
+        movieValue={this.movieValue}
+        handleMovieChange={this.handleMovieChange}
+        handleAddMovie={this.handleAddMovie}/>
+
+        <MovieList
+        movies={this.state.currentList}
+        watched={this.state.watched}
+        />
       </div>
     )
   }

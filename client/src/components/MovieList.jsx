@@ -4,7 +4,7 @@ import MovieListItem from './MovieListItem.jsx'
 const MovieList = (props) => {
   return (
     <ul>
-      {props.movies.map(movie => <MovieListItem movie={movie}/>)}
+      {props.movies.map((movie,i) => <MovieListItem movie={movie} key={i} watched={props.watched}/>)}
     </ul>
   )
 }
